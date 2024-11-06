@@ -10,6 +10,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>( options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConnString"))
+        .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
         .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()));
 });
 
