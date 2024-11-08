@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using MusicPlaylist.WebApi.Repositories;
 using MusicPlaylist.WebApi.Repositories.EntityFramework;
+using MusicPlaylist.WebApi.Services;
+using MusicPlaylist.WebApi.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +12,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DataContext>( options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnString"))
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
         .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
         .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()));
 });
@@ -25,6 +28,9 @@ builder.Services.AddSwaggerGen( options =>
 });
 
 var app = builder.Build();
+
+builder.Services.AddScoped<IArtistRepository, EFArtistRepository>();
+builder.Services.AddScoped<IArtistService, ArtistService>();
 
 if (app.Environment.IsDevelopment())
 {

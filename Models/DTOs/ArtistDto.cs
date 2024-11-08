@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MusicPlaylist.WebApi.Models.DTOs
 {
-    public class CreateArtistDto
+    public class ArtistDto
     {
         [Required(ErrorMessage = "Informe o nome do filme.")]
         public required string Name { get; set; }

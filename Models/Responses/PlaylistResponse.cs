@@ -11,6 +11,6 @@ namespace MusicPlaylist.WebApi.Models.Responses
 
         public required string Name { get; set; }
 
-        public required ICollection<Music> Musics { get; set; } = [];
+        public required IEnumerable<Music> Musics { get; set; } = [];
     }
 }

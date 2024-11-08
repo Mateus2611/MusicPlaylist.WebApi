@@ -15,6 +15,6 @@ namespace MusicPlaylist.WebApi.Models.Responses
 
         public required Artist Artist { get; set; }
 
-        public required ICollection<Playlist> Playlists { get; set; } = [];
+        public required IEnumerable<Playlist> Playlists { get; set; } = [];
     }
 }

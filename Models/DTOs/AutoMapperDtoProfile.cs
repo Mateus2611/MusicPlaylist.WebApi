@@ -10,13 +10,13 @@ namespace MusicPlaylist.WebApi.Models.DTOs
     {
         public AutoMapperDtoProfile()
         {
-            CreateMap<CreateArtistDto, Artist>()
+            CreateMap<ArtistDto, Artist>()
                 .ReverseMap();
 
-            CreateMap<CreateMusicDto, Music>()
+            CreateMap<MusicDto, Music>()
                 .ReverseMap();
 
-            CreateMap<CreatePlaylistDto, Playlist>()
+            CreateMap<PlaylistDto, Playlist>()
                 .ReverseMap();
         }
     }
