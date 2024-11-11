@@ -6,6 +6,6 @@ namespace MusicPlaylist.WebApi.Models
         
         public required string Name { get; set; }
 
-        public virtual ICollection<Music> Musics { get; set; } = [];
+        public ICollection<Music> Musics { get; set; } = [];
     }
 }

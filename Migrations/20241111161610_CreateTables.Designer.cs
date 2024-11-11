@@ -12,8 +12,8 @@ using MusicPlaylist.WebApi.Repositories.EntityFramework;
 namespace MusicPlaylist.WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241107131730_CreateDbAndTables")]
-    partial class CreateDbAndTables
+    [Migration("20241111161610_CreateTables")]
+    partial class CreateTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,6 +21,9 @@ namespace MusicPlaylist.WebApi.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -73,7 +76,8 @@ namespace MusicPlaylist.WebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ArtistsId")
+                    b.Property<int?>("ArtistId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -81,13 +85,13 @@ namespace MusicPlaylist.WebApi.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("name");
 
-                    b.Property<DateOnly>("Release")
-                        .HasColumnType("date")
+                    b.Property<DateTime>("Release")
+                        .HasColumnType("datetime2")
                         .HasColumnName("release");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArtistsId");
+                    b.HasIndex("ArtistId");
 
                     b.ToTable("music", (string)null);
                 });
@@ -130,7 +134,7 @@ namespace MusicPlaylist.WebApi.Migrations
                 {
                     b.HasOne("MusicPlaylist.WebApi.Models.Artist", "Artists")
                         .WithMany("Musics")
-                        .HasForeignKey("ArtistsId")
+                        .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

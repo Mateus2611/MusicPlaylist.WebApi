@@ -8,7 +8,7 @@ namespace MusicPlaylist.WebApi.Models.Responses
 
         public DateTime Release { get; set; }
 
-        public required virtual ArtistOnlyDatasResponse Artist { get; set; }
+        public required virtual ArtistOnlyDatasResponse Artists { get; set; }
 
         public virtual IEnumerable<Playlist> Playlists { get; set; } = [];
     }

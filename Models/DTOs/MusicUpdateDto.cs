@@ -10,5 +10,7 @@ namespace MusicPlaylist.WebApi.Models.DTOs
         public string? Name { get; set; }
 
         public DateTime Release { get; set; }
+
+        public int ArtistId { get; set; }
     }
 }

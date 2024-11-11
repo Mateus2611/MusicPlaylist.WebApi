@@ -44,16 +44,16 @@ namespace MusicPlaylist.WebApi.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ArtistId = table.Column<int>(type: "int", nullable: false),
                     name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    release = table.Column<DateOnly>(type: "date", nullable: false),
-                    ArtistsId = table.Column<int>(type: "int", nullable: false)
+                    release = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_music", x => x.id);
                     table.ForeignKey(
-                        name: "FK_music_artist_ArtistsId",
-                        column: x => x.ArtistsId,
+                        name: "FK_music_artist_ArtistId",
+                        column: x => x.ArtistId,
                         principalTable: "artist",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -84,9 +84,9 @@ namespace MusicPlaylist.WebApi.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_music_ArtistsId",
+                name: "IX_music_ArtistId",
                 table: "music",
-                column: "ArtistsId");
+                column: "ArtistId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_music_playlist_PlaylistsId",

@@ -14,7 +14,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>( options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-        .UseLazyLoadingProxies()
         .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
         .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()));
 });
@@ -29,10 +28,7 @@ builder.Services.AddSwaggerGen( options =>
     });
 });
 
-builder.Services.AddControllers()
-    .AddJsonOptions( options => 
-        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve
-    );
+builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddEndpointsApiExplorer();

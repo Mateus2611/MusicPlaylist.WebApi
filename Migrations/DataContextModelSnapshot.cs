@@ -73,7 +73,8 @@ namespace MusicPlaylist.WebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ArtistId")
+                    b.Property<int?>("ArtistId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")

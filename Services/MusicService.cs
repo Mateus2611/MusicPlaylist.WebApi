@@ -34,11 +34,12 @@ namespace MusicPlaylist.WebApi.Services
 
             newMusic.ArtistId = musicArtist.Id;
 
-            return 
-                _mapper.Map<MusicResponse>
-                (
-                    _musicRepository.Create(newMusic)
-                );
+            var result = _musicRepository.Create(newMusic);
+
+            if ( result is not null )
+                result.Artists = musicArtist;
+
+            return _mapper.Map<MusicResponse>(result);
         }
 
         public void Delete(int id)
@@ -49,22 +50,11 @@ namespace MusicPlaylist.WebApi.Services
 
         public IEnumerable<MusicResponse> GetAll()
         {
-            IEnumerable<MusicResponse> musics = 
-            _mapper.Map<IEnumerable<MusicResponse>>
-                (
-                    _musicRepository.GetAll()
-                );
-
-            // foreach (MusicResponse music in musics)
-            // {
-            //     if ( music.Artist.Id > 0)
-            //     {
-            //         Artist artist = _artistRepository.GetById(music.Artist.Id) ?? throw new Exception("Música sem artista.");
-
-            //         music.Artist.Name = artist.Name;
-            //         music.Artist.Bio = artist.Bio;
-            //     }
-            // }
+            var musics = 
+                _mapper.Map<IEnumerable<MusicResponse>>
+                    (
+                        _musicRepository.GetAll()
+                    );
 
             return musics;
         }
@@ -89,13 +79,24 @@ namespace MusicPlaylist.WebApi.Services
 
         public MusicResponse? Update(int id, MusicUpdateDto music)
         {
-            Music musicUpdate = _mapper.Map<Music>(music);
-            musicUpdate.Id = id;
+            Music oldMusic = _musicRepository.GetById(id) ?? throw new Exception("Música não encontrada.");
+            Artist artistMusic = _artistRepository.GetById(music.ArtistId) ?? throw new Exception("Artista não encontrado.");
+            
+            Music musicUpdated = new() 
+            {
+                Id = oldMusic.Id,
+                Name = music.Name ?? oldMusic.Name,
+                Release = music.Release,
+                ArtistId = music.ArtistId,
+                Artists = artistMusic
+            };
 
-            return
+            // var musicUpdated = _mapper.Map<Music>(music);
+
+            return 
                 _mapper.Map<MusicResponse>
                 (
-                    _musicRepository.Update(musicUpdate)
+                    _musicRepository.Update(musicUpdated)
                 );
         }
     }

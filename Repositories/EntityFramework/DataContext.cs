@@ -11,11 +11,11 @@ namespace MusicPlaylist.WebApi.Repositories.EntityFramework
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
-        public DbSet<Artist> Artists { get; set; }
+        public required DbSet<Artist> Artists { get; set; }
 
-        public DbSet<Music> Musics { get; set; }
+        public required DbSet<Music> Musics { get; set; }
 
-        public DbSet<Playlist> Playlists { get; set; }
+        public required DbSet<Playlist> Playlists { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -38,9 +38,9 @@ namespace MusicPlaylist.WebApi.Repositories.EntityFramework
             modelBuilder.Entity<Playlist>().Property(playlist => playlist.Id).HasColumnName("id");
             modelBuilder.Entity<Playlist>().Property(playlist => playlist.Name).HasColumnName("name");
 
-            modelBuilder.Entity<Music>()
-                .HasOne(m => m.Artists)
-                .WithMany(a => a.Musics)
+            modelBuilder.Entity<Artist>()
+                .HasMany( m => m.Musics )
+                .WithOne( a => a.Artists )
                 .HasForeignKey( m => m.ArtistId);
 
             modelBuilder.Entity<Music>()

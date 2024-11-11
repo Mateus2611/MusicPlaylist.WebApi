@@ -6,6 +6,6 @@ namespace MusicPlaylist.WebApi.Models.Responses
 
         public required string Name { get; set; }
 
-        public virtual required IEnumerable<Music> Musics { get; set; } = [];
+        public virtual IEnumerable<Music> Musics { get; set; } = [];
     }
 }
