@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 
 namespace MusicPlaylist.WebApi.Models.Responses
@@ -13,7 +9,13 @@ namespace MusicPlaylist.WebApi.Models.Responses
             CreateMap<ArtistResponse, Artist>()
                 .ReverseMap();
 
+            CreateMap<ArtistOnlyDatasResponse, Artist>()
+                .ReverseMap();
+
             CreateMap<MusicResponse,Music>()
+                .ReverseMap();
+
+            CreateMap<MusicDatasOnlyResponse, Music>()
                 .ReverseMap();
 
             CreateMap<PlaylistResponse, Playlist>()

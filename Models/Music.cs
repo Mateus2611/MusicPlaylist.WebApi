@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace MusicPlaylist.WebApi.Models
 {
@@ -11,10 +8,12 @@ namespace MusicPlaylist.WebApi.Models
 
         public required string Name { get; set; }
 
-        public DateOnly Release { get; set; }
+        public DateTime Release { get; set; }
 
-        public required Artist Artists { get; set; }
+        public int? ArtistId { get; set; }
 
-        public required ICollection<Playlist> Playlists { get; set; } = [];
+        public required virtual Artist Artists { get; set; }
+
+        public virtual ICollection<Playlist> Playlists { get; set; } = [];
     }
 }

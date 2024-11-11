@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace MusicPlaylist.WebApi.Models
 {
     public class Artist
@@ -13,6 +8,6 @@ namespace MusicPlaylist.WebApi.Models
 
         public required string Bio { get; set; }
 
-        public required ICollection<Music> Musics { get; set; } = [];
+        public ICollection<Music> Musics { get; set; } = [];
     }
 }

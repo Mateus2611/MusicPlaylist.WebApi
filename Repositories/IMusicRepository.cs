@@ -12,9 +12,9 @@ namespace MusicPlaylist.WebApi.Repositories
 
         IEnumerable<Music> GetAll();
 
-        Artist? Update(Artist artist);
+        Music? Update(Music music);
 
-        void Delete(Artist artist);
+        void Delete(Music music);
 
         IEnumerable<Music> GetByName(string name);
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MusicPlaylist.WebApi.Repositories.EntityFramework;
 
@@ -11,16 +12,15 @@ using MusicPlaylist.WebApi.Repositories.EntityFramework;
 namespace MusicPlaylist.WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20241107220710_CreateTables")]
+    partial class CreateTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.10")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -73,7 +73,7 @@ namespace MusicPlaylist.WebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ArtistId")
+                    b.Property<int>("ArtistsId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -81,13 +81,13 @@ namespace MusicPlaylist.WebApi.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("name");
 
-                    b.Property<DateTime>("Release")
-                        .HasColumnType("datetime2")
+                    b.Property<DateOnly>("Release")
+                        .HasColumnType("date")
                         .HasColumnName("release");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArtistId");
+                    b.HasIndex("ArtistsId");
 
                     b.ToTable("music", (string)null);
                 });
@@ -130,7 +130,7 @@ namespace MusicPlaylist.WebApi.Migrations
                 {
                     b.HasOne("MusicPlaylist.WebApi.Models.Artist", "Artists")
                         .WithMany("Musics")
-                        .HasForeignKey("ArtistId")
+                        .HasForeignKey("ArtistsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
