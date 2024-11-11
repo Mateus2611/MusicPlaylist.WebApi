@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using MusicPlaylist.WebApi.Repositories;
@@ -13,6 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>( options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+        .UseLazyLoadingProxies()
         .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
         .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()));
 });
@@ -27,10 +29,20 @@ builder.Services.AddSwaggerGen( options =>
     });
 });
 
-var app = builder.Build();
+builder.Services.AddControllers()
+    .AddJsonOptions( options => 
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve
+    );
+
+builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddScoped<IArtistRepository, EFArtistRepository>();
 builder.Services.AddScoped<IArtistService, ArtistService>();
+builder.Services.AddScoped<IMusicRepository, EFMusicRepository>();
+builder.Services.AddScoped<IMusicService, MusicService>();
+
+var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
@@ -50,5 +62,7 @@ app.Use(async (context, next) =>
     }
     await next();
 });
+
+app.MapControllers();
 
 app.Run();

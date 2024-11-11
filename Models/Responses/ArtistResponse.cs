@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace MusicPlaylist.WebApi.Models.Responses
 {
@@ -12,7 +9,7 @@ namespace MusicPlaylist.WebApi.Models.Responses
         public required string Name { get; set; }
 
         public required string Bio { get; set; }
-
-        public required IEnumerable<Music> Musics { get; set; } = [];
+        
+        public virtual IEnumerable<MusicDatasOnlyResponse> Musics { get; set; } = [];
     }
 }

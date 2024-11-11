@@ -36,8 +36,8 @@ namespace MusicPlaylist.WebApi.Services
 
         public void Delete(int id)
         {
-            Artist genreDelete = _artistRepository.GetById(id) ?? throw new Exception("Filme não encontrado.");
-            _artistRepository.Delete(genreDelete);
+            Artist artistDelete = _artistRepository.GetById(id) ?? throw new Exception("Artista não encontrado.");
+            _artistRepository.Delete(artistDelete);
         }
 
         public IEnumerable<ArtistResponse> GetAll()
@@ -67,7 +67,7 @@ namespace MusicPlaylist.WebApi.Services
                 );
         }
 
-        public ArtistResponse? Update(int id, ArtistDto artist)
+        public ArtistResponse? Update(int id, ArtistUpdateDto artist)
         {
             Artist artistUpdate = _mapper.Map<Artist>(artist);
             artistUpdate.Id = id;

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace MusicPlaylist.WebApi.Repositories.EntityFramework
 {
@@ -12,7 +13,8 @@ namespace MusicPlaylist.WebApi.Repositories.EntityFramework
         public EFGenericRepository(DataContext context) => _context = context;
 
         public IEnumerable<T> GetAll()
-            => _context.Set<T>().ToList();
+            => _context.Set<T>()
+            .ToList();
         
         public T? Create(T entity)
         {

@@ -38,10 +38,10 @@ namespace MusicPlaylist.WebApi.Repositories.EntityFramework
             modelBuilder.Entity<Playlist>().Property(playlist => playlist.Id).HasColumnName("id");
             modelBuilder.Entity<Playlist>().Property(playlist => playlist.Name).HasColumnName("name");
 
-
             modelBuilder.Entity<Music>()
                 .HasOne(m => m.Artists)
-                .WithMany(a => a.Musics);
+                .WithMany(a => a.Musics)
+                .HasForeignKey( m => m.ArtistId);
 
             modelBuilder.Entity<Music>()
                 .HasMany(p => p.Playlists)

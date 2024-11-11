@@ -13,7 +13,7 @@ namespace MusicPlaylist.WebApi.Services.Interfaces
 
         IEnumerable<ArtistResponse> GetAll();
 
-        ArtistResponse? Update(int id, ArtistDto artist);
+        ArtistResponse? Update(int id, ArtistUpdateDto artist);
 
         void Delete(int id);
 

@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 
 namespace MusicPlaylist.WebApi.Models.DTOs
@@ -13,7 +9,13 @@ namespace MusicPlaylist.WebApi.Models.DTOs
             CreateMap<ArtistDto, Artist>()
                 .ReverseMap();
 
+            CreateMap<ArtistUpdateDto, Artist>()
+                .ReverseMap();
+
             CreateMap<MusicDto, Music>()
+                .ReverseMap();
+
+            CreateMap<MusicUpdateDto, Music>()
                 .ReverseMap();
 
             CreateMap<PlaylistDto, Playlist>()
