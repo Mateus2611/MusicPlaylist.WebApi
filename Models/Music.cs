@@ -14,6 +14,7 @@ namespace MusicPlaylist.WebApi.Models
 
         public required Artist Artists { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Playlist> Playlists { get; set; } = [];
     }
 }

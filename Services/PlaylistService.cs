@@ -28,11 +28,14 @@ namespace MusicPlaylist.WebApi.Services
 
         public PlaylistResponse? Create(PlaylistDto playlist)
         {
-            Playlist newPlaylist = _mapper.Map<Playlist>(playlist);
-            
-            newPlaylist = _playlistRepository.Create(newPlaylist) ?? throw new Exception("Playlist não encontrada. ");
+            Playlist? newPlaylist = _mapper.Map<Playlist>(playlist);
 
-            if (playlist.MusicsIds is not null && playlist.MusicsIds.Any() && newPlaylist is not null)
+            newPlaylist = _playlistRepository.Create(newPlaylist);
+
+            if (newPlaylist is null)
+                return null;
+
+            if (playlist.MusicsIds is not null && playlist.MusicsIds.Any())
             {
                 PlaylistMusicDto playlistMusicDto = new()
                 {
@@ -100,13 +103,17 @@ namespace MusicPlaylist.WebApi.Services
 
             foreach (int music in musics.IdsMusics)
             {
-                Music? item = _musicRepository.GetById(music);
+                try
+                {
+                    Music? item = _musicRepository.GetById(music);
 
-                if (item is not null)
-                    playlist.Musics.Add(item);
+                    if (item is not null)
+                        playlist.Musics.Add(item);
+                } 
+                catch {}
             }
 
-            return 
+            return
                 _mapper.Map<PlaylistResponse>
                 (
                     _playlistRepository.Update(playlist)
@@ -128,7 +135,7 @@ namespace MusicPlaylist.WebApi.Services
                     playlist.Musics.Remove(item);
             }
 
-            return 
+            return
                 _mapper.Map<PlaylistResponse>
                 (
                     _playlistRepository.Update(playlist)

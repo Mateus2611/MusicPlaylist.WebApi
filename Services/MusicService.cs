@@ -91,8 +91,6 @@ namespace MusicPlaylist.WebApi.Services
                 Artists = artistMusic
             };
 
-            // var musicUpdated = _mapper.Map<Music>(music);
-
             return 
                 _mapper.Map<MusicResponse>
                 (
