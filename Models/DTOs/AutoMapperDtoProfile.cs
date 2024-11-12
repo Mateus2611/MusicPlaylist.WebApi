@@ -20,6 +20,9 @@ namespace MusicPlaylist.WebApi.Models.DTOs
 
             CreateMap<PlaylistDto, Playlist>()
                 .ReverseMap();
+
+            CreateMap<PlaylistUpdateDto, Playlist>()
+                .ReverseMap();
         }
     }
 }
