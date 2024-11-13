@@ -17,6 +17,8 @@ namespace MusicPlaylist.WebApi.Repositories.EntityFramework
 
         public required DbSet<Playlist> Playlists { get; set; }
 
+        public required DbSet<MusicsPlaylists> MusicPlaylists { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -38,15 +40,25 @@ namespace MusicPlaylist.WebApi.Repositories.EntityFramework
             modelBuilder.Entity<Playlist>().Property(playlist => playlist.Id).HasColumnName("id");
             modelBuilder.Entity<Playlist>().Property(playlist => playlist.Name).HasColumnName("name");
 
+            modelBuilder.Entity<MusicsPlaylists>().ToTable("music_playlist");
+            modelBuilder.Entity<MusicsPlaylists>().HasKey(mp => new { mp.PlaylistId, mp.MusicId });
+            modelBuilder.Entity<MusicsPlaylists>().Property(mp => mp.MusicId).HasColumnName("MusicsId");
+            modelBuilder.Entity<MusicsPlaylists>().Property(mp => mp.PlaylistId).HasColumnName("PlaylistsId");
+
             modelBuilder.Entity<Artist>()
                 .HasMany( m => m.Musics )
                 .WithOne( a => a.Artists )
                 .HasForeignKey( m => m.ArtistId);
 
-            modelBuilder.Entity<Music>()
-                .HasMany(p => p.Playlists)
-                .WithMany(m => m.Musics)
-                .UsingEntity(mp => mp.ToTable("music_playlist"));
+            modelBuilder.Entity<MusicsPlaylists>()
+                .HasOne( mp => mp.Musics)
+                .WithMany( mp => mp.MusicPlaylists)
+                .HasForeignKey( mp => mp.MusicId);
+
+            modelBuilder.Entity<MusicsPlaylists>()
+                .HasOne( mp => mp.Playlists)
+                .WithMany( mp => mp.MusicPlaylists)
+                .HasForeignKey( mp => mp.PlaylistId);
         }
     }
 }

@@ -39,6 +39,7 @@ builder.Services.AddScoped<IMusicRepository, EFMusicRepository>();
 builder.Services.AddScoped<IMusicService, MusicService>();
 builder.Services.AddScoped<IPlaylistRepository, EFPlaylistRepository>();
 builder.Services.AddScoped<IPlaylistService, PlaylistService>();
+builder.Services.AddScoped<IMusicsPlaylists, EFMusicsPlaylists>();
 
 var app = builder.Build();
 

@@ -28,18 +28,21 @@ namespace MusicPlaylist.WebApi.Repositories.EntityFramework
 
         public IEnumerable<Playlist> GetAll()
             => _context.Playlists
-                .Include( playlist => playlist.Musics)
+                .Include( p => p.MusicPlaylists )
+                .ThenInclude( p => p.Musics )
                 .ToList();
 
         public Playlist? GetById(int id)
             => _context.Playlists
-                .Include( playlist => playlist.Musics )
-                .Single( playlist => playlist.Id == id);
+                .Include( p => p.MusicPlaylists )
+                .ThenInclude( p => p.Musics )
+                .Single( p => p.Id == id );
 
         public IEnumerable<Playlist> GetByName(string name)
             => _context.Playlists
-                .Include( playlist => playlist.Musics)
-                .Where( playlist => playlist.Name.ToLower().Contains(name.ToLower()));
+                .Include( p => p.MusicPlaylists )
+                .ThenInclude( p => p.Musics )
+                .Where( p => p.Name.ToLower().Contains(name.ToLower()));
 
         public Playlist? Update(Playlist playlist)
         {

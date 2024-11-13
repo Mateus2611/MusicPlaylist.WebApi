@@ -10,11 +10,11 @@ namespace MusicPlaylist.WebApi.Models
 
         public DateTime Release { get; set; }
 
-        public int? ArtistId { get; set; }
+        public int ArtistId { get; set; }
 
         public required Artist Artists { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<Playlist> Playlists { get; set; } = [];
+        public virtual ICollection<MusicsPlaylists> MusicPlaylists { get; set; } = [];
     }
 }

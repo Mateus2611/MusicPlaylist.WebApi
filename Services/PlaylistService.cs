@@ -17,12 +17,15 @@ namespace MusicPlaylist.WebApi.Services
 
         private readonly IMusicRepository _musicRepository;
 
+        private readonly IMusicsPlaylists _musicsPlaylistsRepository;
+
         private readonly IMapper _mapper;
 
-        public PlaylistService(IPlaylistRepository playlistRepository, IMusicRepository musicRepository, IMapper mapper)
+        public PlaylistService(IPlaylistRepository playlistRepository, IMusicRepository musicRepository, IMusicsPlaylists musicsPlaylistsRepository, IMapper mapper)
         {
             _playlistRepository = playlistRepository;
             _musicRepository = musicRepository;
+            _musicsPlaylistsRepository = musicsPlaylistsRepository;
             _mapper = mapper;
         }
 
@@ -43,7 +46,10 @@ namespace MusicPlaylist.WebApi.Services
                     IdPlaylist = newPlaylist.Id
                 };
 
-                AddMusic(playlistMusicDto);
+                newPlaylist = _mapper.Map<Playlist>
+                (
+                    AddMusic(playlistMusicDto)
+                );
             }
 
             return _mapper.Map<PlaylistResponse>(newPlaylist);
@@ -107,8 +113,17 @@ namespace MusicPlaylist.WebApi.Services
                 {
                     Music? item = _musicRepository.GetById(music);
 
-                    if (item is not null)
-                        playlist.Musics.Add(item);
+                    if ( item is not null )
+                    {
+                        MusicsPlaylists musicsPlaylists = new()
+                        {
+                            PlaylistId = playlist.Id,
+                            MusicId = item.Id
+                        };
+
+                        _musicsPlaylistsRepository.Add(musicsPlaylists);
+                    }
+
                 } 
                 catch {}
             }
@@ -116,7 +131,7 @@ namespace MusicPlaylist.WebApi.Services
             return
                 _mapper.Map<PlaylistResponse>
                 (
-                    _playlistRepository.Update(playlist)
+                    _playlistRepository.GetAll()
                 );
         }
 
@@ -129,16 +144,29 @@ namespace MusicPlaylist.WebApi.Services
 
             foreach (int music in musics.IdsMusics)
             {
-                Music? item = _musicRepository.GetById(music);
+                try
+                {
+                    Music? item = _musicRepository.GetById(music);
 
-                if (item is not null)
-                    playlist.Musics.Remove(item);
+                    if ( item is not null )
+                    {
+                        MusicsPlaylists musicsPlaylists = new()
+                        {
+                            PlaylistId = playlist.Id,
+                            MusicId = item.Id
+                        };
+
+                        _musicsPlaylistsRepository.Remove(musicsPlaylists);
+                    }
+
+                } 
+                catch {}
             }
 
             return
                 _mapper.Map<PlaylistResponse>
                 (
-                    _playlistRepository.Update(playlist)
+                    _playlistRepository.GetAll()
                 );
         }
     }
