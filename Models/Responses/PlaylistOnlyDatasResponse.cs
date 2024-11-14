@@ -1,11 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 namespace MusicPlaylist.WebApi.Models.Responses
 {
-    public class PlaylistResponse
+    public class PlaylistOnlyDatasResponse
     {
         public int Id { get; set; }
 
         public required string Name { get; set; }
-
-        public virtual IEnumerable<MusicsPlaylistsResponse> MusicPlaylists { get; set; } = [];
     }
 }

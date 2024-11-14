@@ -92,11 +92,12 @@ namespace MusicPlaylist.WebApi.Services
         {
             Playlist playlistUpdate = _mapper.Map<Playlist>(playlist);
             playlistUpdate.Id = id;
+            _playlistRepository.Update(playlistUpdate);
 
             return
                 _mapper.Map<PlaylistResponse>
                 (
-                    _playlistRepository.Update(playlistUpdate)
+                    _playlistRepository.GetById(id)
                 );
         }
 
@@ -131,7 +132,7 @@ namespace MusicPlaylist.WebApi.Services
             return
                 _mapper.Map<PlaylistResponse>
                 (
-                    _playlistRepository.GetAll()
+                    _playlistRepository.GetById(playlist.Id)
                 );
         }
 
@@ -166,7 +167,7 @@ namespace MusicPlaylist.WebApi.Services
             return
                 _mapper.Map<PlaylistResponse>
                 (
-                    _playlistRepository.GetAll()
+                    _playlistRepository.GetById(playlist.Id)
                 );
         }
     }

@@ -20,6 +20,12 @@ namespace MusicPlaylist.WebApi.Models.Responses
 
             CreateMap<PlaylistResponse, Playlist>()
                 .ReverseMap();
+
+            CreateMap<PlaylistOnlyDatasResponse, Playlist>()
+                .ReverseMap();
+
+            CreateMap<MusicsPlaylistsResponse, MusicsPlaylists>()
+                .ReverseMap();
         }
     }
 }

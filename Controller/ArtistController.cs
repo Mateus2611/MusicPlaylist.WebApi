@@ -25,12 +25,19 @@ namespace MusicPlaylist.WebApi.Controller
         [HttpGet("{id}")]
         public ActionResult<ArtistResponse> GetById([FromRoute(Name = "id")] int id)
         {
-            ArtistResponse? artist = _artistService.GetById(id);
+            try
+            {
+                ArtistResponse? artist = _artistService.GetById(id);
 
-            if (artist is null)
+                if (artist is null)
+                    return NotFound();
+
+                return Ok(artist);
+            }
+            catch
+            {
                 return NotFound();
-            
-            return Ok(artist);            
+            }
         }
 
         [HttpPost]
@@ -54,12 +61,19 @@ namespace MusicPlaylist.WebApi.Controller
         [HttpPut("{id}")]
         public ActionResult<ArtistResponse> Update([FromRoute(Name = "id")] int id, [FromBody] ArtistUpdateDto artist)
         {
-            ArtistResponse? artistUpdate = _artistService.Update(id, artist);
+            try
+            {
+                ArtistResponse? artistUpdate = _artistService.Update(id, artist);
 
-            if (artistUpdate is null)
-                return NotFound();
-            
-            return Ok(artistUpdate);
+                if (artistUpdate is null)
+                    return NotFound();
+
+                return Ok(artistUpdate);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         [HttpDelete("{id}")]
