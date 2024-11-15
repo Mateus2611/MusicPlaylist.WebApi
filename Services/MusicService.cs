@@ -79,13 +79,12 @@ namespace MusicPlaylist.WebApi.Services
 
         public MusicResponse? Update(int id, MusicUpdateDto music)
         {
-            Music oldMusic = _musicRepository.GetById(id) ?? throw new Exception("Música não encontrada.");
             Artist artistMusic = _artistRepository.GetById(music.ArtistId) ?? throw new Exception("Artista não encontrado.");
             
             Music musicUpdated = new() 
             {
-                Id = oldMusic.Id,
-                Name = music.Name ?? oldMusic.Name,
+                Id = id,
+                Name = music.Name,
                 Release = music.Release,
                 ArtistId = music.ArtistId,
                 Artists = artistMusic

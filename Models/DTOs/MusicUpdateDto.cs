@@ -7,7 +7,7 @@ namespace MusicPlaylist.WebApi.Models.DTOs
 {
     public class MusicUpdateDto
     {
-        public string? Name { get; set; }
+        public required string Name { get; set; }
 
         public DateTime Release { get; set; }
 
