@@ -79,21 +79,20 @@ namespace MusicPlaylist.WebApi.Services
 
         public MusicResponse? Update(int id, MusicUpdateDto music)
         {
-            Artist artistMusic = _artistRepository.GetById(music.ArtistId) ?? throw new Exception("Artista não encontrado.");
-            
             Music musicUpdated = new() 
             {
                 Id = id,
                 Name = music.Name,
                 Release = music.Release,
-                ArtistId = music.ArtistId,
-                Artists = artistMusic
+                ArtistId = music.ArtistId
             };
+
+            var resultUpdated = _musicRepository.Update(musicUpdated);
 
             return 
                 _mapper.Map<MusicResponse>
                 (
-                    _musicRepository.Update(musicUpdated)
+                    _musicRepository.GetById(resultUpdated.Id)
                 );
         }
     }

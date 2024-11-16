@@ -12,7 +12,7 @@ namespace MusicPlaylist.WebApi.Models
 
         public int ArtistId { get; set; }
 
-        public required Artist Artists { get; set; }
+        public Artist? Artists { get; set; }
 
         [JsonIgnore]
         public virtual ICollection<MusicsPlaylists> MusicPlaylists { get; set; } = [];
