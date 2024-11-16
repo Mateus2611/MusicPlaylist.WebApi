@@ -31,7 +31,6 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddScoped<IArtistRepository, EFArtistRepository>();
 builder.Services.AddScoped<IArtistService, ArtistService>();
@@ -43,22 +42,19 @@ builder.Services.AddScoped<IMusicsPlaylists, EFMusicsPlaylists>();
 
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI(opttions =>
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
-    opttions.SwaggerEndpoint("/swagger/v1/swagger.json", "MusicPlaylist.WebApi v1");
-});
-
-
-app.Use(async (context, next) =>
-{
-    if (context.Request.Path == "/")
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
     {
-        context.Response.Redirect("/swagger");
-        return;
-    }
-    await next();
-});
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Minha API v1");
+        c.RoutePrefix = string.Empty;
+    });
+}
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
 
 app.MapControllers();
 
