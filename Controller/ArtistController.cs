@@ -13,7 +13,14 @@ namespace MusicPlaylist.WebApi.Controller
 
         public ArtistsController(IArtistService artistService) => _artistService = artistService;
 
+        /// <summary>
+        /// Obter todos os artistas ou buscar pelo nome.
+        /// </summary>
+        /// <param name="name">Preencha com o nome do artista (Opcional).</param>
+        /// <returns>Coleção de artistas.</returns>
+        /// <response code="200">Sucesso</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<ArtistResponse>> Get([FromQuery(Name = "name")] string? name)
         {
             if (name is not null)
@@ -22,7 +29,16 @@ namespace MusicPlaylist.WebApi.Controller
             return Ok(_artistService.GetAll());
         }
 
+        /// <summary>
+        /// Obter dados de um artista.
+        /// </summary>
+        /// <param name="id">Identificador do artista.</param>
+        /// <returns>Dados do artista</returns>
+        /// <response code="200">Sucesso</response>
+        /// <response code="404">Não encontrado</response>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<ArtistResponse> GetById([FromRoute(Name = "id")] int id)
         {
             try
@@ -40,7 +56,20 @@ namespace MusicPlaylist.WebApi.Controller
             }
         }
 
+        /// <summary>
+        /// Criar um artista.
+        /// </summary>
+        /// <remarks>
+        ///     "name": (Este campo deve ser preenchido com o nome do artista desejado.),
+        ///     "bio": (Este campo deve ser preenchido com a biografia do artista).
+        /// </remarks>
+        /// <param name="artist">Dados do artista.</param>
+        /// <returns>Objeto recém-criado</returns>
+        /// <response code="201">Sucesso</response>
+        /// <response code="404">Não encontrado</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]	
         public ActionResult<ArtistResponse> Create([FromBody] ArtistDto artist)
         {
             try
@@ -58,7 +87,23 @@ namespace MusicPlaylist.WebApi.Controller
             }
         }
 
+        /// <summary>
+        /// Atualizar dados do artista.
+        /// </summary>
+        /// <remarks>
+        ///     "name": (Este campo deve ser preenchido com o nome do artista desejado.),
+        ///     "bio": (Este campo deve ser preenchido com a biografia do artista).
+        /// </remarks>
+        /// <param name="id">Identificador do artista.</param>
+        /// <param name="artist">Dados do artista.</param>
+        /// <returns>Objeto com dados atualizados.</returns>
+        /// <response code="200">Sucesso</response>
+        /// <response code="404">Não encontrado</response>
+        /// <response code="400">Erro ao buscar dados</response>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<ArtistResponse> Update([FromRoute(Name = "id")] int id, [FromBody] ArtistUpdateDto artist)
         {
             try
@@ -76,6 +121,13 @@ namespace MusicPlaylist.WebApi.Controller
             }
         }
 
+        /// <summary>
+        /// Deletar um artista
+        /// </summary>
+        /// <param name="id">Identificador do artista.</param>
+        /// <returns>Sem retorno</returns>
+        /// <response code="204">Sucesso</response>
+        /// <response code="404">Não encontrado</response>
         [HttpDelete("{id}")]
         public ActionResult Delete([FromRoute(Name = "id")] int id)
         {

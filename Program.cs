@@ -23,9 +23,19 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "MusicPlaylist",
-        Description = "Documentação da API MusicPlaylist.WebApi",
-        Version = "v1"
+        Description = "A api MusicPlaylist permite que o usuário que a for consumir, realize operações no banco de dados passando informações através da rotas de requisições, onde, poderá realizar todas as operações CRUD nas entidades de Artists, Musics e Playlists.",
+        Version = "v1",
+        Contact = new OpenApiContact
+        {
+            Name = "Mateus Henrique Alves de Souza",
+            Email = "mateushas.dev@gmail.com",
+            Url = new Uri("https://www.linkedin.com/in/mateushenriqueas/")
+        }
     });
+
+    var xmlFile = "MusicPlaylist.WebApi.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    options.IncludeXmlComments(xmlPath);
 });
 
 builder.Services.AddControllers();
@@ -47,7 +57,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Minha API v1");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "MusicPlaylist API v1");
         c.RoutePrefix = string.Empty;
     });
 }
