@@ -23,7 +23,7 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "MusicPlaylist",
-        Description = "A api MusicPlaylist permite que o usuário que a for consumir, realize operações no banco de dados passando informações através da rotas de requisições, onde, poderá realizar todas as operações CRUD nas entidades de Artists, Musics e Playlists.",
+        Description = "MusicPlaylist é uma api com três entidades (Artists, Musics e Playlists) que permite a realização das operações de criar, consultar, atualizar e deletar.",
         Version = "v1",
         Contact = new OpenApiContact
         {
