@@ -131,6 +131,8 @@ namespace MusicPlaylist.WebApi.Controller
         /// <response code="204">Sucesso</response>
         /// <response code="404">Não encontrado</response>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult Delete([FromRoute(Name = "id")] int id)
         {
             try
