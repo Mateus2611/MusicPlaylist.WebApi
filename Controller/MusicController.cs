@@ -57,17 +57,19 @@ namespace MusicPlaylist.WebApi.Controller
         /// Criar uma música.
         /// </summary>
         /// <remarks>
-        ///     "name": (Deve ser preenchido com o nome da música), 
-        ///     "release": (Deve ser preenchido com a data de lançamento da música no formato yyyy-MM-dd), 
-        ///     "artistId": (Deve ser preenchido com o identificador do artista responsável pela música)
+        ///     name: Deve ser preenchido com o nome da música,<br></br> 
+        ///     release: Deve ser preenchido com a data de lançamento da música no formato yyyy-MM-dd,<br></br> 
+        ///     artistId: Deve ser preenchido com o identificador do artista responsável pela música
         /// </remarks>
         /// <param name="music">Dados da música.</param>
         /// <returns>Objeto recém-criado</returns>
         /// <response code="201">Sucesso</response>
         /// <response code="404">Não encontrado</response>
+        /// <response code="400">Erro ao recuperar dados</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<MusicResponse> Create([FromBody] MusicDto music)
         {
             try
@@ -89,9 +91,9 @@ namespace MusicPlaylist.WebApi.Controller
         /// Atualizar dados da música.
         /// </summary>
         /// <remarks>
-        ///     "name": (Deve ser preenchido com o nome da música), 
-        ///     "release": (Deve ser preenchido com a data de lançamento da música no formato yyyy-MM-dd), 
-        ///     "artistId": (Deve ser preenchido com o identificador do artista responsável pela música)
+        ///     name: Deve ser preenchido com o nome da música,<br></br> 
+        ///     release: Deve ser preenchido com a data de lançamento da música no formato yyyy-MM-dd,<br></br> 
+        ///     artistId: Deve ser preenchido com o identificador do artista responsável pela música
         /// </remarks>
         /// <param name="id">Identificador da música.</param>
         /// <param name="music">Dados da música.</param>

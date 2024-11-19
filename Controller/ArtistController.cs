@@ -60,16 +60,18 @@ namespace MusicPlaylist.WebApi.Controller
         /// Criar um artista.
         /// </summary>
         /// <remarks>
-        ///     "name": (Este campo deve ser preenchido com o nome do artista desejado.),
-        ///     "bio": (Este campo deve ser preenchido com a biografia do artista).
+        ///     name: Este campo deve ser preenchido com o nome do artista desejado,<br></br>
+        ///     bio: Este campo deve ser preenchido com a biografia do artista.
         /// </remarks>
         /// <param name="artist">Dados do artista.</param>
         /// <returns>Objeto recém-criado</returns>
         /// <response code="201">Sucesso</response>
         /// <response code="404">Não encontrado</response>
+        /// <response code="400">Erro ao recuperar dados</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]	
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]	
         public ActionResult<ArtistResponse> Create([FromBody] ArtistDto artist)
         {
             try
@@ -91,8 +93,8 @@ namespace MusicPlaylist.WebApi.Controller
         /// Atualizar dados do artista.
         /// </summary>
         /// <remarks>
-        ///     "name": (Este campo deve ser preenchido com o nome do artista desejado.),
-        ///     "bio": (Este campo deve ser preenchido com a biografia do artista).
+        ///     name: Este campo deve ser preenchido com o nome do artista desejado,<br></br>
+        ///     bio: Este campo deve ser preenchido com a biografia do artista.
         /// </remarks>
         /// <param name="id">Identificador do artista.</param>
         /// <param name="artist">Dados do artista.</param>
